@@ -19,16 +19,27 @@ const index = (req, res) => {
 
 //show
 const show = (req, res) => {
-  const post = postsData.find((elm) => elm.id == req.params.id);
+  const id = req.params.id;
+  const sql = `SELECT * FROM posts WHERE id = ?`;
 
-  if (!post) {
-    return res.status(404).json({
-      error: "Not Found",
-      message: "Post non trovato",
-    });
-  }
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Database query failed",
+      });
+    }
 
-  res.json(post);
+    const post = results[0];
+
+    if (!post) {
+      return res.status(404).json({
+        error: "Not Found",
+        message: "Post non trovato",
+      });
+    }
+
+    res.json(post);
+  });
 };
 
 //create
@@ -70,18 +81,28 @@ const modify = (req, res) => {
 
 //delete
 const destroy = (req, res) => {
-  const post = postsData.find((elm) => elm.id == req.params.id);
+  //  const post = postsData.find((elm) => elm.id == req.params.id);
 
-  if (!post) {
-    return res.status(404).json({
-      error: "Post not found",
-    });
-  }
+  //  if (!post) {
+  //    return res.status(404).json({
+  //      error: "Post not found",
+  //    });
+  //  }
 
-  postsData.splice(postsData.indexOf(post), 1);
-  console.log("Post aggiornati:", postsData);
+  //  postsData.splice(postsData.indexOf(post), 1);
+  //  console.log("Post aggiornati:", postsData);
 
-  res.sendStatus(204);
+  const sql = `DELETE FROM posts WHERE id = ?`;
+  const id = req.params.id;
+
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Database query failed",
+      });
+    }
+    res.sendStatus(204);
+  });
 };
 
 module.exports = { index, show, create, update, modify, destroy };
