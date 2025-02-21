@@ -1,0 +1,25 @@
+{
+  "name": "express-blog-routing",
+  "version": "1.0.0",
+  "description": "blog routing",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "watch": "node --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michelelongo97/express-blog-routing.git"
+  },
+  "author": "michele",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michelelongo97/express-blog-routing/issues"
+  },
+  "homepage": "https://github.com/michelelongo97/express-blog-routing#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}
